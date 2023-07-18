@@ -1,16 +1,23 @@
 import React from 'react';
+import axios from 'axios';
+import '../styles/TopicListItem.scss';
 
-import '../styles/TopicListItem'
+const TopicListItem = (props) => {
+  // Destructure the necessary props
+  const { title, id, setPhotos } = props;
 
-const TopicListItem = () => {
-  <div className="topic-list__item">
-    {/* Insert React */}
-  </div>
+  // Function to handle when a topic is clicked
+  const handleClick = () => {
+    axios.get(`/api/topics/photos/${id}`)
+      .then(res => setPhotos(res.data));
+  }
+
+  return (
+    <div className="topic-list__item">
+      {/* Render the topic title as a clickable span */}
+      <span onClick={handleClick}>{title}</span>
+    </div>
+  );
 }
 
-TopicListItem.defaultProps =   {
-  "id": "1",
-  "slug": "topic-1",
-  "label": "Nature"
-}
-export default TopicListItem
+export default TopicListItem;
